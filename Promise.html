@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Promise Day 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #2b1055, #000);
+    overflow: hidden;
+    color: white;
+}
+
+/* Floating Hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0) scale(1); opacity: 1; }
+    to { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+}
+
+/* Container */
+.container {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 520px;
+    margin: auto;
+    margin-top: 10vh;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 105, 180, 0.35);
+}
+
+h1 {
+    color: #ffb6c1;
+    margin-bottom: 5px;
+}
+
+h2 {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.question {
+    font-size: 1.15rem;
+    margin-bottom: 25px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.optionA {
+    background: #ff4f8b;
+    color: white;
+}
+
+.optionB {
+    background: #6b6b6b;
+    color: white;
+}
+
+/* Popper Blast */
+.popper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    display: none;
+    animation: blast 0.8s ease-out forwards;
+    z-index: 999;
+}
+
+@keyframes blast {
+    0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+.answers {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+.secret {
+    display: none;
+    margin-top: 25px;
+    font-size: 1.1rem;
+    color: #ffd1dc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="popper" id="popper">💖💥</div>
+
+<div class="container">
+    <h1>For My Bubu 💕</h1>
+    <h2>Promise Day Special</h2>
+
+    <div class="question" id="question"></div>
+
+    <div class="buttons">
+        <button class="optionA" id="optA" onclick="answer(0)"></button>
+        <button class="optionB" id="optB" onclick="answer(1)"></button>
+    </div>
+
+    <div class="answers" id="answers"></div>
+
+    <div class="secret" id="secret">
+        💌 <br><br>
+        You made it till the end…  
+        <br><br>
+        You didn’t just answer questions.
+        You stepped into moments — private, intense, and honest. I'll take a note of these answers.
+        <br><br>
+        📸 Take a screenshot of this full quiz  
+        and send it to me…
+        Your surprise awaits in the mail my owner will send after this quiz.
+    </div>
+</div>
+
+<script>
+/* Questions + Custom Options */
+const quiz = [
+{
+    q: "French kiss or Cheek kiss?",
+    options: ["French kiss 💋", "Cheek kiss 😘"]
+},
+{
+    q: "69 or missionary which position ?",
+    options: ["69 🥵", "Missionary"]
+},
+{
+    q: "Which flavour do you like Chocolate or strawberry ?",
+    options: ["Chocolate 🍫", "Strawberry 🍓"]
+},
+{
+    q: "Short duration many sessions or Long duration single session?",
+    options: ["Short duration many sessions 🕐", "Long duration single session 🕑"]
+},
+{
+    q: "Which one do u like me sucking boobs or pussy ?",
+    options: ["Boobs", "Pussy"]
+},
+{
+    q: "Roleplay or No roleplay?",
+    options: ["Roleplay", "No Roleplay"]
+},
+{
+    q: "Drunk us or sober us intimating ?",
+    options: ["Drunk us", "Sober us"]
+},
+{
+    q: "Porn category ?",
+    options: ["BDSM", "Squirting"]
+},
+{
+    q: "Indian or foreign category porn ?",
+    options: ["Indian", "Foreign"]
+},
+{
+    q: "What part of my body do you like the taste ?",
+    options: ["Dick", "Tongue"]
+}
+];
+
+let index = 0;
+let answers = "";
+
+function loadQuestion() {
+    document.getElementById("question").innerText = quiz[index].q;
+    document.getElementById("optA").innerText = quiz[index].options[0];
+    document.getElementById("optB").innerText = quiz[index].options[1];
+}
+
+function answer(choice) {
+    blast();
+    answers += `Q${index + 1}: ${quiz[index].options[choice]} 💖<br>`;
+    document.getElementById("answers").innerHTML = answers;
+    index++;
+
+    setTimeout(() => {
+        if (index < quiz.length) {
+            loadQuestion();
+        } else {
+            document.querySelector(".buttons").style.display = "none";
+            document.getElementById("question").style.display = "none";
+            document.getElementById("secret").style.display = "block";
+        }
+    }, 700);
+}
+
+function blast() {
+    const p = document.getElementById("popper");
+    p.style.display = "block";
+    p.innerText = "💖💥";
+    setTimeout(() => p.style.display = "none", 800);
+}
+
+/* Floating hearts generator */
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 10000);
+}, 400);
+
+loadQuestion();
+</script>
+
+</body>
+</html>
